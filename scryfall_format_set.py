@@ -14,5 +14,7 @@ while more:
     cardnames = cardnames + [cardset.data()[x]["name"] for x in range(len(cardset.data()))]
     page += 1
 
-for cardname in cardnames:
-    process_card(cardname)
+print("Collected search results for set: " + expansion)
+
+for cardname in sorted(set(cardnames)):
+    process_card(cardname, expansion=expansion)
