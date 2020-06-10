@@ -5,11 +5,13 @@ page = 0
 cardnames = []
 more = True
 expansion = input("Type the three-character set code for the set you want to scan: ")
+advanced = input("Enter advanced scryfall criteria here. (e.g. frame:showcase color:red) Leave blank for no extra criteria: ")
+holo = input("Enter Yes to remove the holostamp from the scan. Leave blank to keep the holostamp: ")
 
 # ensure we get every card from the set (multiple search result pages)
 while more:
     time.sleep(0.1)
-    cardset = scrython.cards.Search(q="set:" + expansion, page=page)
+    cardset = scrython.cards.Search(q="set:" + expansion + " " + advanced, page=page)
     more = cardset.has_more()
     cardnames = cardnames + [cardset.data()[x]["name"] for x in range(len(cardset.data()))]
     page += 1
@@ -17,4 +19,4 @@ while more:
 print("Collected search results for set: " + expansion)
 
 for cardname in sorted(set(cardnames)):
-    process_card(cardname, expansion=expansion)
+    process_card(cardname, expansion=expansion, advanced=advanced, holo=holo)
