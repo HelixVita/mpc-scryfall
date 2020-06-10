@@ -8,16 +8,20 @@ from numpy.fft import fft2, ifft2, fftshift, ifftshift
 from skimage.transform import resize
 
 
-def process_card(cardname, expansion=None):
+def process_card(cardname, expansion=None, advanced=None, holo=None):
     time.sleep(0.05)
 
     # try/except in case the search doesn't return anything
     try:
         # If the card specifies which set to retrieve the scan from, do that
-        if expansion:
+        if advanced:
+            # advanced specified from advanced formatter
+            query = "!\"" + cardname + "\" set:" + expansion + " " + advanced
+            print("Processing: " + cardname + ", set: " + expansion + ", advanced: " + advanced)		
+        elif expansion:
             # Set specified from set formatter
             query = "!\"" + cardname + "\" set=" + expansion
-            print("Processing: " + cardname + ", set: " + expansion)
+            print("Processing: " + cardname + ", set: " + expansion)		
         else:
             query = "!\"" + cardname + "\""
             print("Processing: " + cardname)
@@ -77,8 +81,11 @@ def process_card(cardname, expansion=None):
         im_padded = np.zeros([im.shape[0] + 2 * pad, im.shape[1] + 2 * pad, 3])
 
         # Get border colour from left side of image
-        bordercolour = np.median(im_recon_sc[200:(im_recon_sc.shape[0] - 200), 0:bordertol], axis=(0, 1))
-
+        if advanced:
+            bordercolour = np.amin(im_recon_sc[200:(im_recon_sc.shape[0]-200), 0:bordertol], axis=(0, 1))
+        else:
+            bordercolour = np.median(im_recon_sc[200:(im_recon_sc.shape[0]-200), 0:bordertol], axis=(0, 1))
+		
         # Pad image
         for i in range(0, 3):
             im_padded[pad:im.shape[0] + pad, pad:im.shape[1] + pad, i] = im_recon_sc[:, :, i]
@@ -142,28 +149,29 @@ def process_card(cardname, expansion=None):
                 pass
 
         # Remove holostamp
-        if card["frame"] == "2015" and (card["rarity"] == "rare" or card["rarity"] == "mythic") \
-                and "/large/front/" in card_obj["image_uris"]["large"]:
-            # Need to remove holostamp
-            # Define bounds of ellipse to fill with border colour
-            leftE = 575
-            rightE = 690
-            topE = 1520
-            bottomE = 1575
+        if holo:
+            if card["frame"] == "2015" and (card["rarity"] == "rare" or card["rarity"] == "mythic") \
+                    and "/large/front/" in card_obj["image_uris"]["large"]:
+                # Need to remove holostamp
+                # Define bounds of ellipse to fill with border colour
+                leftE = 575
+                rightE = 690
+                topE = 1520
+                bottomE = 1575
 
-            cx = (leftE + rightE) / 2
-            cy = (topE + bottomE) / 2
+                cx = (leftE + rightE) / 2
+                cy = (topE + bottomE) / 2
 
-            h = (bottomE - topE) / 2
-            w = (rightE - leftE) / 2
+                h = (bottomE - topE) / 2
+                w = (rightE - leftE) / 2
 
-            for x in range(leftE, rightE + 1):
-                for y in range(topE, bottomE + 1):
-                    # determine if point is in the holostamp area
-                    if pow(x - cx, 2) / pow(w, 2) + pow(y - cy, 2) / pow(h, 2) <= 1:
-                        # point is inside ellipse
-                        im_padded[y, x, :] = bordercolour
-
+                for x in range(leftE, rightE + 1):
+                    for y in range(topE, bottomE + 1):
+                        # determine if point is in the holostamp area
+                        if pow(x - cx, 2) / pow(w, 2) + pow(y - cy, 2) / pow(h, 2) <= 1:
+                            # point is inside ellipse
+                            im_padded[y, x, :] = bordercolour
+		
         # Write image to disk
         imageio.imwrite("formatted/" + name + ".png", im_padded.astype(np.uint8))
 
