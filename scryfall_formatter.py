@@ -183,6 +183,6 @@ if __name__ == "__main__":
             cardname = cardname.rstrip()
             try:
                 pipe_idx = cardname.index("|")
-                process_card(cardname[0:pipe_idx], cardname[pipe_idx+1:])
+                process_card(cardname[0:pipe_idx], cardname[pipe_idx+1:],"","yes","yes")
             except ValueError:
                 process_card(cardname)
