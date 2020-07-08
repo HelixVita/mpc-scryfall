@@ -5,6 +5,8 @@ page = 0
 cardnames = []
 more = True
 expansion = input("Type the character set code for the cube you want to scan: ")
+holo = input("Enter Yes to remove the holostamp from the scan. Leave blank to keep the holostamp: ")
+copyright = input("Enter Yes to remove the copyright from the scan. Leave blank to keep the copyright: ")
 
 # ensure we get every card from the cube (multiple search result pages)
 while more:
@@ -17,4 +19,4 @@ while more:
 print("Collected search results for cube: " + expansion)
 
 for cardname in sorted(set(cardnames)):
-    process_card(cardname, expansion=None)
+    process_card(cardname, expansion=None, advanced=None, holo=holo, copyright=copyright)
