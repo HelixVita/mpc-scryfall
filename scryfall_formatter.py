@@ -7,6 +7,7 @@ import numpy as np
 import os
 from numpy.fft import fft2, ifft2, fftshift, ifftshift
 from skimage.transform import resize
+from skimage.filters import unsharp_mask
 
 
 def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=None):
@@ -35,6 +36,8 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
     # Handle cards with multiple faces
     if card["layout"] == "transform":
         cards = [x for x in card["card_faces"]]
+    elif card["layout"] == "double_faced_token":
+        cards = [x for x in card["card_faces"]]
     else:
         cards = [card, ]
 
@@ -42,11 +45,12 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
         name = card_obj["name"].replace("//", "&")  # should work on macOS & windows now
         name = name.replace(":", "")  # case for Circle of Protection: X
         name = name.replace("?", "")
+        name = name.replace("\"", "")
         if expansion is None:
             expansion = card_obj["set"]
         
         if os.path.isfile("./formatted/" + expansion + "/" + name + ".png"):
-                print("Card already exists. Skipping: " + name)
+            print("Card already exists. Skipping: " + name)
         else:
             # Process with waifu2x
             r = requests.post(
@@ -179,16 +183,19 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
                             if pow(x - cx, 2) / pow(w, 2) + pow(y - cy, 2) / pow(h, 2) <= 1:
                                 # point is inside ellipse
                                 im_padded[y, x, :] = bordercolour
-        
+
+            im_sharp = unsharp_mask(im_padded.astype(np.uint8), radius=3, amount=0.3)
+            im_sharp = im_sharp * 255
+			
             # Write image to disk
             if expansion:
                 try:
                     os.mkdir("./formatted/" + expansion)
-                    imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_padded.astype(np.uint8))
+                    imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_sharp.astype(np.uint8))
                 except FileExistsError:
-                    imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_padded.astype(np.uint8))
+                    imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_sharp.astype(np.uint8))
             else:
-                imageio.imwrite("formatted/" + name + ".png", im_padded.astype(np.uint8))
+                imageio.imwrite("formatted/" + name + ".png", im_sharp.astype(np.uint8))
 
 
 if __name__ == "__main__":
@@ -196,6 +203,7 @@ if __name__ == "__main__":
     with open('cards.txt', 'r') as fp:
         for cardname in fp:
             cardname = cardname.rstrip()
+            cardname = cardname.replace("\"", "")
             try:
                 pipe_idx = cardname.index("|")
                 process_card(cardname[0:pipe_idx], cardname[pipe_idx+1:],"","yes","yes")
