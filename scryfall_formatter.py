@@ -128,10 +128,13 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
 					bottomPix = 1585
 
 					# story spotlights have a shifted legal line
-					if card_obj["story_spotlight"] is True:
-						topPix = 1585
-						bottomPix = 1625
-						# spotlight card
+					try:
+						if card_obj["story_spotlight"] is True:
+							topPix = 1585
+							bottomPix = 1625
+							# spotlight card
+					except KeyError:
+						pass
 
 					# creatures have a shifted legal line
 					try:
