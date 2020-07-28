@@ -127,10 +127,10 @@ def process_card_dups(cardname, cardnumber, expansion=None, advanced=None, holo=
 				bottomPix = 1585
 
 				# story spotlights have a shifted legal line
-					if card_obj["story_spotlight"] is True:
-						topPix = 1585
-						bottomPix = 1625
-						# spotlight card
+				if card_obj["story_spotlight"] is True:
+					topPix = 1585
+					bottomPix = 1625
+					# spotlight card
 
 				# creatures have a shifted legal line
 				try:
