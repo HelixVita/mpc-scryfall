@@ -36,6 +36,8 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
 	# Handle cards with multiple faces
 	if card["layout"] == "transform":
 		cards = [x for x in card["card_faces"]]
+	elif card["layout"] == "modal_dfc":
+		cards = [x for x in card["card_faces"]]
 	elif card["layout"] == "double_faced_token":
 		cards = [x for x in card["card_faces"]]
 	else:
