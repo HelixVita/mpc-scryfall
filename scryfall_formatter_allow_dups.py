@@ -37,6 +37,8 @@ def process_card_dups(cardname, cardnumber, expansion=None, advanced=None, holo=
 	collectornumber = card["collector_number"]
 	if card["layout"] == "transform":
 		cards = [x for x in card["card_faces"]]
+	elif card["layout"] == "modal_dfc":
+		cards = [x for x in card["card_faces"]]
 	elif card["layout"] == "double_faced_token":
 		cards = [x for x in card["card_faces"]]
 	else:
