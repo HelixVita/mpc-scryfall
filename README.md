@@ -16,11 +16,14 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 
 # Install / Usage Guide
 * Download the script and filter image somewhere on your computer
-* Create a file called `config.py` in the same folder. Its contents should be the line `TOKEN = '<your token from deepAI.org>'`, excluding the <>'s.
+* Update the file called `config.py` with the API token from deepai.org. It should be one line with the following contents `TOKEN = '<your token from deepAI.org>'`, excluding the <>'s.
 * Create a folder called `formatted` in the same location
-* Create a text file called `cards.txt` and put the card names you want to scan in it, one on each line. Optionally, specify the version of the card you want; for example, `Sulfuric Vortex|CNS`
+* Update the 'cards' text files and put the card names, URLs, or paths to lcoal card images you want to scan in it, one on each line.
 * To scan each card in `cards.txt`, run `scryfall_formatter.py`
-* To do entire sets at a time, run `scryfall_formatter_set.py` and type in the three-character set code for the set you want when prompted
+* To scan each card in `cards_local.txt`, run `scryfall_formatter_local.py`
+* To scan each card in `cards_url.txt`, run `scryfall_formatter_url.py`
+* To do entire sets at a time, run `scryfall_format_set.py` and type in the three-character set code for the set you want when prompted
+* To process a single url, run `scryfall_format_url.py` and follow the prompts.
 * If you're on a Mac and get an error talking about certificate verification failing, go to Applications -> Python 3.X and run `Install Certificates.command`, and that should fix it!
 * If you get an error that looks something like `KeyError: 'output_url'`, double check that you've received and confirmed your deepAI account by email
 
