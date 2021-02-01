@@ -18,7 +18,7 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 * Download the script and filter image somewhere on your computer
 * Update the file called `config.py` with the API token from deepai.org. It should be one line with the following contents `TOKEN = '<your token from deepAI.org>'`, excluding the <>'s.
 * Create a folder called `formatted` in the same location
-* Update the 'cards' text files and put the card names, URLs, or paths to lcoal card images you want to scan in it, one on each line.
+* Update the 'cards' text files and put the card names, URLs, or paths to local card images you want to scan in it, one on each line.
 * To scan each card in `cards.txt`, run `scryfall_formatter.py`
 * To scan each card in `cards_local.txt`, run `scryfall_formatter_local.py`
 * To scan each card in `cards_url.txt`, run `scryfall_formatter_url.py`
