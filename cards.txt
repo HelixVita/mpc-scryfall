@@ -1,0 +1,2 @@
+Card Name 1|SetCodeFromScryfall
+Card Name 2|SetCodeFromScryfall

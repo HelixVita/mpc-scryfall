@@ -1,0 +1,2 @@
+pathToFile1|Card Name 1
+pathToFile2|Card Name 2

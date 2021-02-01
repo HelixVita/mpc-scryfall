@@ -1,0 +1,2 @@
+URLfor CardImage 1|Card Name 1
+URLfor CardImage 2|Card Name 2
