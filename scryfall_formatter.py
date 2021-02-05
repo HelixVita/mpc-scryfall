@@ -93,11 +93,13 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
 			bordertol = 16  # Overfill onto existing border by 16px to remove white corners
 			im_padded = np.zeros([im.shape[0] + 2 * pad, im.shape[1] + 2 * pad, 3])
 
-			# Get border colour from left side of image
-			if advanced:
-				bordercolour = np.amin(im_recon_sc[200:(im_recon_sc.shape[0]-200), 0:bordertol], axis=(0, 1))
+			# Set border colour depending on set
+			if card["border_color"] == "black":
+				bordercolour = [0,0,0]
+			elif card["border_color"] == "white":
+				bordercolour = [255,255,255]
 			else:
-				bordercolour = np.median(im_recon_sc[200:(im_recon_sc.shape[0]-200), 0:bordertol], axis=(0, 1))
+				bordercolour = [0,0,0]
 		
 			# Pad image
 			for i in range(0, 3):
