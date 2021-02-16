@@ -34,3 +34,7 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
    * Run the following command: dir /b /s >cards_local.txt
    * This will create a file called cards_local.txt in the directory with the iamges, with all the filepaths to the images populated.
    * Then all you have to do is add the pipe | and the name you want the card saved as, so for example: C:\MPC-Images\Demonic Tutor.png|Demonic Tutor
+
+# Tip Jar
+* https://paypal.me/BootlegMTG
+* Tips are never expected, but always appreciated.
