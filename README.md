@@ -24,6 +24,7 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 * To scan each card in `cards_url.txt`, run `scryfall_formatter_url.py`
 * To do entire sets at a time, run `scryfall_format_set.py` and type in the three-character set code for the set you want when prompted
 * To process a single url, run `scryfall_format_url.py` and follow the prompts.
+* To download all art crops for a set, run `scryfall_image_crop_set.py` and follow the prompts (this is useful for the mtg-autoproxy tool: https://github.com/ndepaola/mtg-autoproxy).
 * If you're on a Mac and get an error talking about certificate verification failing, go to Applications -> Python 3.X and run `Install Certificates.command`, and that should fix it!
 * If you get an error that looks something like `KeyError: 'output_url'`, double check that you've received and confirmed your deepAI account by email
 
@@ -32,7 +33,7 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 * If you have a folder full of images you want to process with the local card formatter, you can generate the cards_local.txt file very easily by doing the following (assuming you are using Windows):
    * Open a command prompt and cd to the directory where the images live.
    * Run the following command: dir /b /s >cards_local.txt
-   * This will create a file called cards_local.txt in the directory with the iamges, with all the filepaths to the images populated.
+   * This will create a file called cards_local.txt in the directory with the images, with all the filepaths to the images populated.
    * Then all you have to do is add the pipe | and the name you want the card saved as, so for example: C:\MPC-Images\Demonic Tutor.png|Demonic Tutor
 
 # Tip Jar
