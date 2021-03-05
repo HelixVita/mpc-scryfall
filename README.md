@@ -25,6 +25,7 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 * To do entire sets at a time, run `scryfall_format_set.py` and type in the three-character set code for the set you want when prompted
 * To process a single url, run `scryfall_format_url.py` and follow the prompts.
 * To download all art crops for a set, run `scryfall_image_crop_set.py` and follow the prompts (this is useful for the mtg-autoproxy tool: https://github.com/ndepaola/mtg-autoproxy).
+   * Create a folder called `artcrop` in the same location if you plan on using this feature
 * If you're on a Mac and get an error talking about certificate verification failing, go to Applications -> Python 3.X and run `Install Certificates.command`, and that should fix it!
 * If you get an error that looks something like `KeyError: 'output_url'`, double check that you've received and confirmed your deepAI account by email
 
