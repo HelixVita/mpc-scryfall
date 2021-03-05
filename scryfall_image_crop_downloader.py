@@ -6,7 +6,7 @@ import os
 import urllib.request
 
 def process_card(cardname, expansion=None):
-	time.sleep(0.05)
+	time.sleep(0.1)
 	path = pathlib.Path(__file__).parent.absolute()
 
 	# try/except in case the search doesn't return anything
