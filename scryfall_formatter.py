@@ -9,7 +9,6 @@ from numpy.fft import fft2, ifft2, fftshift, ifftshift
 from skimage.transform import resize
 from skimage.filters import unsharp_mask
 
-
 def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=None):
 	time.sleep(0.05)
 
@@ -58,7 +57,7 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
 			r = requests.post(
 				"https://api.deepai.org/api/waifu2x",
 				data={
-					'image': card_obj["image_uris"]["large"],
+					'image': card_obj["image_uris"]["png"],
 				},
 				headers={'api-key': config.TOKEN}
 			)
@@ -196,19 +195,16 @@ def process_card(cardname, expansion=None, advanced=None, holo=None, copyright=N
 							if pow(x - cx, 2) / pow(w, 2) + pow(y - cy, 2) / pow(h, 2) <= 1:
 								# point is inside ellipse
 								im_padded[y, x, :] = bordercolour
-
-			im_sharp = unsharp_mask(im_padded.astype(np.uint8), radius=3, amount=0.3)
-			im_sharp = im_sharp * 255
 			
 			# Write image to disk
 			if expansion:
 				try:
 					os.mkdir("./formatted/" + expansion)
-					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_sharp.astype(np.uint8))
+					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_padded.astype(np.uint8))
 				except FileExistsError:
-					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_sharp.astype(np.uint8))
+					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_padded.astype(np.uint8))
 			else:
-				imageio.imwrite("formatted/" + name + ".png", im_sharp.astype(np.uint8))
+				imageio.imwrite("formatted/" + name + ".png", im_padded.astype(np.uint8))
 
 
 if __name__ == "__main__":
