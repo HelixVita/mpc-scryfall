@@ -195,22 +195,25 @@ def process_card_dups(cardname, cardnumber, expansion=None, advanced=None, holo=
 						if pow(x - cx, 2) / pow(w, 2) + pow(y - cy, 2) / pow(h, 2) <= 1:
 							# point is inside ellipse
 							im_padded[y, x, :] = bordercolour
+							
+		im_sharp = unsharp_mask(im_padded.astype(np.uint8), radius=3, amount=0.3)
+		im_sharp = im_sharp * 255
 		
 		# Write image to disk
 		if expansion:
 			try:
 				os.mkdir("./formatted/" + expansion)
 				if os.path.isfile("./formatted/" + expansion + "/" + name + ".png"):
-					imageio.imwrite("formatted/" + expansion + "/" + name + " - " + collectornumber + ".png", im_padded.astype(np.uint8))
+					imageio.imwrite("formatted/" + expansion + "/" + name + " - " + collectornumber + ".png", im_sharp.astype(np.uint8))
 				else:
-					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_padded.astype(np.uint8))
+					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_sharp.astype(np.uint8))
 			except FileExistsError:
 				if os.path.isfile("./formatted/" + expansion + "/" + name + ".png"):
-					imageio.imwrite("formatted/" + expansion + "/" + name + " - " + collectornumber + ".png", im_padded.astype(np.uint8))
+					imageio.imwrite("formatted/" + expansion + "/" + name + " - " + collectornumber + ".png", im_sharp.astype(np.uint8))
 				else:
-					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_padded.astype(np.uint8))
+					imageio.imwrite("formatted/" + expansion + "/" + name + ".png", im_sharp.astype(np.uint8))
 		else:
-			imageio.imwrite("formatted/" + name + " - " + collectornumber + ".png", im_padded.astype(np.uint8))
+			imageio.imwrite("formatted/" + name + " - " + collectornumber + ".png", im_sharp.astype(np.uint8))
 
 
 if __name__ == "__main__":

@@ -73,9 +73,12 @@ def process_card(url, cardname):
 	# Bottom
 	im_padded[im_padded.shape[0] - (pad + bordertol):im_padded.shape[0],
 			  0:im_padded.shape[1], :] = bordercolour
+			  
+	im_sharp = unsharp_mask(im_padded.astype(np.uint8), radius=3, amount=0.3)
+	im_sharp = im_sharp * 255
 			
 	# Write image to disk
-	imageio.imwrite("formatted/" + cardname + ".png", im_padded.astype(np.uint8))
+	imageio.imwrite("formatted/" + cardname + ".png", im_sharp.astype(np.uint8))
 
 
 if __name__ == "__main__":
