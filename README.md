@@ -1,13 +1,13 @@
 # mpc-scryfall
 Simple tool to retrieve Scryfall scans of MTG cards, perform some light processing on them, and prepare them for printing with MPC. This tool will throw Scryfall scans through waifu2x (courtesy of deepAI), lightly filter the image, then remove the holographic stamp and copyright info. There is an expectation that some post-image processing will need to be done in GIMP or Photoshop or a similar image editing tool. Depending on the Scryfall scan, the outer bleed edge and the inner card border can be differing shades of black. My tool will add a full black (0,0,0) outer border (or full white if choosing a white bordered set). This can differ from the black color from the scan, so you will want to bucket fill similar colors on the inner black border to match the full black outer border. Similarly, the holostamp (if removed) will leave the stamp area black. You can use content aware filling (photoshop) or heal selection (GIMP) to flatten the stamp area and text box. See an example below of a fully processed card taken from a scryfall scan with the stamp area flattened/filled.
 
-![img1](https://i.imgur.com/aQdaYQ7.png)
+![img1](https://i.imgur.com/bqGvQdi.png)
 
 # Requirements
 * An internet connection while the tool is running
 * A deepAI.org account (free) 
 * Python 3
-* The Python 3 packages:
+* The Python 3 packages (use pip to install the following packages, e.g. pip install Scrython):
    * Scrython
    * imageio
    * requests
@@ -18,14 +18,25 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 * Download the script and filter image somewhere on your computer
 * Update the file called `config.py` with the API token from deepai.org. It should be one line with the following contents `TOKEN = '<your token from deepAI.org>'`, excluding the <>'s.
 * Create a folder called `formatted` in the same location
-* Update the 'cards' text files and put the card names, URLs, or paths to local card images you want to scan in it, one on each line.
-* To scan each card in `cards.txt`, run `scryfall_formatter.py`
-* To scan each card in `cards_local.txt`, run `scryfall_formatter_local.py`
-* To scan each card in `cards_url.txt`, run `scryfall_formatter_url.py`
-* To do entire sets at a time, run `scryfall_format_set.py` and type in the three-character set code for the set you want when prompted
-* To process a single url, run `scryfall_format_url.py` and follow the prompts.
-* To download all art crops for a set, run `scryfall_image_crop_set.py` and follow the prompts (this is useful for the mtg-autoproxy tool: https://github.com/ndepaola/mtg-autoproxy).
-   * Create a folder called `artcrop` in the same location if you plan on using this feature
+* To download and process specific cards from Scryfall:
+   * Add each card to `cards.txt`, one card on each line.
+   * Run `scryfall_formatter.py`
+* To process cards/images that you have stored locally:
+   * Add each card/image filepath to `cards_local.txt`, one card/image filepath on each line.
+   * Run `scryfall_formatter_local.py`
+* To process cards/images that you have a URL for:
+   * Add each card/image URL to `cards_url.txt`, one card/image URL on each line.
+   * Run `scryfall_formatter_url.py`
+* To download and process entire sets from Scryfall:
+   * Run `scryfall_format_set.py`
+   * Type in the three-character set code for the set you want when prompted
+* To process a single card/image that you have a URL for:
+   * Run `scryfall_format_url.py`
+   * Follow the prompts.
+* To download all art crops for a set from Scryfall:
+   * Create a folder called `artcrop`
+   * Run `scryfall_image_crop_set.py`
+   * Follow the prompts (this is useful for the mtg-autoproxy tool: https://github.com/ndepaola/mtg-autoproxy).
 * If you're on a Mac and get an error talking about certificate verification failing, go to Applications -> Python 3.X and run `Install Certificates.command`, and that should fix it!
 * If you get an error that looks something like `KeyError: 'output_url'`, double check that you've received and confirmed your deepAI account by email
 
