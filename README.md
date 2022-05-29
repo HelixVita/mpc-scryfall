@@ -87,3 +87,27 @@ Unfortunately though, the solution isn't as easy as setting the tolerance high a
 * I use a rectangular selection over the holofoil 'cavity' and right-click and select Context Aware Fill and use the default settings.
 * Then I usually have to repeat this 2-3 times on a smaller and smaller area each time until it becomes perfectly straight.
 * Note: I prefer not to do this on dual-colored cards as it ends up looking quite ugly imho.
+
+# Notes for Forkers & Contributors
+If you intend to push anything to github that relates to this repo, it'd be in your interest **to avoid accidentally sharing your api token** that you added to `config.py`
+
+The config.py file cannot be added to `.gitignore` as this would remove it from the repo entirely. Instead, we want to have `config.py` in the repo but to avoid git from tracking any further changes to the config file after it is downloaded for the first time
+
+Here's how to tell git to stop tracking changes to any file:
+
+```bash
+git update-index --assume-unchanged <file>
+```
+
+And just FYI here's the reverse operation:
+
+```bash
+git update-index --no-assume-unchanged <file>
+```
+
+So, to stop tracking changes to the `config.py` file, execute the following command inside your repo:
+```bash
+git update-index --assume-unchanged config.py
+```
+
+You can use this command for any file you'd like. For example, perhaps `cards.txt.` is another good candidate.
