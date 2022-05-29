@@ -1,0 +1,5 @@
+scrython
+imageio
+requests
+numpy
+scikit-image
