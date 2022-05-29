@@ -5,7 +5,7 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 
 # Requirements
 * An internet connection while the tool is running
-* A deepAI.org account (free) 
+* A deepAI.org account (free)
 * Python 3
 * The Python 3 packages (use pip to install the following packages, e.g. pip install Scrython):
    * Scrython
@@ -51,3 +51,39 @@ Simple tool to retrieve Scryfall scans of MTG cards, perform some light processi
 # Tip Jar
 * https://paypal.me/BootlegMTG
 * Tips are never expected, but always appreciated.
+
+
+# Additional Notes on Post-Filtering Methods
+FelixVita's notes to self how (in detail) to best perform post-filtering cleanup in photoshop.
+
+## Copyright Removal (for Cards with Modern frame)
+My preferred method is to use the Content Aware Fill, using the following workflowØ
+* Open all cards in photoshop (as separate tabs)
+* Find the card that has the largest (i.e. widest) copyright out of all the cards AND has a power/toughness box
+* Use the lasso tool to draw a selection around the copyright of that card
+* Explanation: The reason I don't use a simple rectangular selection here is because I've found that the irregular edge caused by the slightly unsteady hand actually makes the result better.
+* Right click the selection and choose "Content Aware Fill"
+* Enable the "Mirrored" option in the right side-panel
+* Done.
+
+## Bucket Fill
+When you're doing this it's a bit hard to tell whether you've managed to successfully replace the pale black color of the border with the same true black as the bleed edge.
+Unfortunately though, the solution isn't as easy as setting the tolerance high and the opacity to 100%, because that's not gonna work with the black border cards. Instead I've adopted a slightly different workflow:
+* Bucket fill tool, with the following settings:
+   * color = true black (#000000),
+   * mode = normal,
+   * opacity 50%,
+   * tolerance = 20,
+   * contiguous = enabled (to avoid stuff in the middle of the card to get filled)
+* Then, for every non-black card, I click about 6-7 times around various places of the border
+   * For black cards, you'll just want to be a bit more careful where and how many times you click
+* Then I bring up levels (Ctrl+L) and drag the middle slider all the way to the left
+   * This will reveal whether the border is true black or not
+* Close the levels window and click a few more times if needed
+* Done.
+
+## Holofoil stamp removal
+* I'm not as obsessive about this one, and I'm sure there's a better way, but as of right now here's my (not particularly complex) workflow:
+* I use a rectangular selection over the holofoil 'cavity' and right-click and select Context Aware Fill and use the default settings.
+* Then I usually have to repeat this 2-3 times on a smaller and smaller area each time until it becomes perfectly straight.
+* Note: I prefer not to do this on dual-colored cards as it ends up looking quite ugly imho.
