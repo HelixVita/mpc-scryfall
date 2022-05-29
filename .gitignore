@@ -138,6 +138,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Ignore this file to avoid accidentally sharing API token
-config.py
